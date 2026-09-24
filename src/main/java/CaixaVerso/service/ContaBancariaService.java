@@ -42,8 +42,16 @@ public class ContaBancariaService {
                 .orElseThrow(()-> new RuntimeException("Conta não Localizada!") );
     }
 
+    public List<ContaBancaria> buscarContasPorPessoa(Long id){
+        pessoaRepository.findById(id).orElseThrow(
+                ()-> new PessoaNaoEncontradaException()
+        );
+
+        return contaBancariaRepository.findByTitularId(id);
+    }
+
     @Transactional
-    public void cadastrarContaBancaria(String agencia, String numero, BigDecimal saldo, boolean ativa, Long idPessoa, Long idTipoConta ){
+    public ContaBancaria cadastrarContaBancaria(String agencia, String numero, BigDecimal saldo, boolean ativa, Long idPessoa, Long idTipoConta ){
         //TipocontaExiste
         TipoConta tipoConta = tipoContaRepository.findById(idTipoConta).orElseThrow(() ->new TipoContaNaoEncontradaException());
 
@@ -54,7 +62,10 @@ public class ContaBancariaService {
             if(contaBancariaRepository.existsByAgenciaAndNumero(agencia,numero))
                 new ContaJaCadastradaException();
 
-        contaBancariaRepository.save(
-                new ContaBancaria(agencia,numero,saldo,true,pessoa,tipoConta));
+            ContaBancaria novaConta = new ContaBancaria(agencia,numero,saldo,ativa,pessoa,tipoConta);
+
+        System.out.println(novaConta);
+
+        return contaBancariaRepository.save(novaConta);
     }
 }

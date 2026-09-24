@@ -34,7 +34,7 @@ public class ContaBancaria {
 
     }
 
-    public ContaBancaria(String agencia, String numero, BigDecimal saldoInicial, boolean ativa, Pessoa titularId, TipoConta tipoConta) {
+    public ContaBancaria(String agencia, String numero, BigDecimal saldoInicial, boolean ativa, Pessoa titular, TipoConta tipoConta) {
 
         if (saldoInicial ==null ){
             throw new IllegalArgumentException("Informe o saldo inicial");
@@ -42,12 +42,11 @@ public class ContaBancaria {
         if(saldoInicial.compareTo(BigDecimal.ZERO)<0){
             throw new IllegalArgumentException("O saldo inicial não pode ser negativo");
         }
-        this.id = id;
         this.agencia = agencia;
         this.numero = numero;
         this.saldo = saldoInicial;
         this.ativa = ativa;
-        this.titular = titularId;
+        this.titular = titular;
         this.tipoConta = tipoConta;
     }
 

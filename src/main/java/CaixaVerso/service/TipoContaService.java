@@ -22,7 +22,7 @@ public class TipoContaService {
 
     public TipoConta buscarPorId(Long id){
         return tipoContaRepository.findById(id)
-                .orElseThrow(()-> new ContaNaoEncontradaException("Tipo de Conta não Localizada!") );
+                .orElseThrow(()-> new ContaNaoEncontradaException());
     }
 
     @Transactional

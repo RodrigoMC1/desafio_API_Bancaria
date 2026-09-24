@@ -29,11 +29,11 @@ public class PessoaService {
     }
 
     @Transactional
-    public void cadastrarPessoa(String nome, String cpf, String email){
+    public Pessoa cadastrarPessoa(String nome, String cpf, String email){
         if(pessoaRepository.existsByCpf(cpf))
            throw new CpfJaCadastradoException();
 
-        pessoaRepository.save(
+        return pessoaRepository.save(
                 new Pessoa(nome, cpf, email));
     }
 }

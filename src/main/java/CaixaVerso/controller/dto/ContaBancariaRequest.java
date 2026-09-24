@@ -1,10 +1,17 @@
 package CaixaVerso.controller.dto;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 import java.math.BigDecimal;
 
-public record ContaBancariaRequest(String agencia,
-                                   String numero,
-                                   BigDecimal saldo,
-                                   boolean ativa,
-                                   Long pessoaId,
-                                   Long tipoContaId) {
+public record ContaBancariaRequest(
+        @Size(max = 4)
+        String agencia,
+        String numero,
+        BigDecimal saldo,
+        boolean ativa,
+        @NotNull
+        Long pessoaId,
+        @NotNull
+        Long tipoContaId) {
 }

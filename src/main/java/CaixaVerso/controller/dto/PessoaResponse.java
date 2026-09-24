@@ -1,5 +1,6 @@
 package CaixaVerso.controller.dto;
 
+import CaixaVerso.entity.Pessoa;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record PessoaResponse(
@@ -8,4 +9,11 @@ public record PessoaResponse(
         @Schema(example = "123456790") String cpf,
         @Schema(example = "filipecoordenador@caixa.gov.br") String email
 ) {
+    public static PessoaResponse de(Pessoa pessoa){
+        return new PessoaResponse(
+                pessoa.getId(),
+                pessoa.getNome(),
+                pessoa.getCpf(),
+                pessoa.getEmail());
+    }
 }
