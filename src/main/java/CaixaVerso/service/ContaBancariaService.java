@@ -3,10 +3,7 @@ package CaixaVerso.service;
 import CaixaVerso.entity.ContaBancaria;
 import CaixaVerso.entity.Pessoa;
 import CaixaVerso.entity.TipoConta;
-import CaixaVerso.exception.ContaJaCadastradaException;
-import CaixaVerso.exception.CpfJaCadastradoException;
-import CaixaVerso.exception.PessoaNaoEncontradaException;
-import CaixaVerso.exception.TipoContaNaoEncontradaException;
+import CaixaVerso.exception.*;
 import CaixaVerso.repository.ContaBancariaRepository;
 import CaixaVerso.repository.PessoaRepository;
 import CaixaVerso.repository.TipoContaRepository;
@@ -15,6 +12,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -67,5 +65,26 @@ public class ContaBancariaService {
         System.out.println(novaConta);
 
         return contaBancariaRepository.save(novaConta);
+    }
+
+    @Transactional
+    public ContaBancaria sacar(Long id, @NotNull BigDecimal valor) {
+
+        ContaBancaria conta = contaBancariaRepository.findById(id)
+                .orElseThrow(()-> new ContaNaoEncontradaException());
+
+        conta.sacar(valor);
+
+        return conta;
+    }
+
+    @Transactional
+    public ContaBancaria depositar(Long id, @NotNull BigDecimal valor) {
+
+        ContaBancaria conta = contaBancariaRepository.findById(id).orElseThrow(()-> new ContaNaoEncontradaException());
+
+        conta.depositar(valor);
+        return conta;
+
     }
 }

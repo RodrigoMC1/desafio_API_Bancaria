@@ -1,6 +1,9 @@
 package CaixaVerso.entity;
 
+import CaixaVerso.exception.SaldoInsuficienteException;
+import CaixaVerso.exception.ValorDepositoIncorretoException;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
@@ -76,5 +79,20 @@ public class ContaBancaria {
 
     public TipoConta getTipoConta() {
         return tipoConta;
+    }
+
+
+    public void sacar(BigDecimal valor){
+        if(saldo.compareTo(valor) > 0){
+            throw new SaldoInsuficienteException("Saldo insulficiente");
+        }
+        this.saldo = saldo.subtract(valor);
+    }
+
+    public void depositar(@NotNull BigDecimal valor) {
+        if(valor.compareTo(BigDecimal.ZERO) <= 0){
+            throw new ValorDepositoIncorretoException("Valor do deposito é invalido");
+        }
+        this.saldo = saldo.add(valor);
     }
 }

@@ -2,6 +2,8 @@ package CaixaVerso.controller;
 
 import CaixaVerso.controller.dto.ContaBancariaRequest;
 import CaixaVerso.controller.dto.ContaBancariaResponse;
+import CaixaVerso.controller.dto.DepositoRequest;
+import CaixaVerso.controller.dto.SaqueRequest;
 import CaixaVerso.entity.ContaBancaria;
 import CaixaVerso.repository.ContaBancariaRepository;
 import CaixaVerso.repository.PessoaRepository;
@@ -9,8 +11,10 @@ import CaixaVerso.service.ContaBancariaService;
 import CaixaVerso.service.TipoContaService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.function.EntityResponse;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -62,5 +66,19 @@ public class ContaBancariaController {
         return ResponseEntity.ok(contas.stream().map(ContaBancariaResponse::de).toList());
     }
 
+    @PatchMapping("/{id}/sacar/")
+    public ResponseEntity<ContaBancariaResponse> sacar(@PathVariable Long id, @Valid @RequestBody SaqueRequest dto){
+
+        ContaBancaria conta = contaBancariaService.sacar(id, dto.valor());
+
+        return ResponseEntity.ok(ContaBancariaResponse.de(conta));
+    }
+
+    @PatchMapping("/{id}/depositar/")
+    public ResponseEntity<ContaBancariaResponse> depositar(@PathVariable Long id, @Valid @RequestBody DepositoRequest dto){
+        ContaBancaria conta = contaBancariaService.depositar(id, dto.valor());
+
+        return ResponseEntity.ok(ContaBancariaResponse.de(conta));
+    }
 
 }
