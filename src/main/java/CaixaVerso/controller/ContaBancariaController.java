@@ -34,7 +34,7 @@ public class ContaBancariaController {
                 dto.numero(),
                 dto.saldo(),
                 dto.ativa(),
-                dto.pessoaId(),
+                dto.titularId(),
                 dto.tipoContaId()
         );
 

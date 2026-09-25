@@ -11,7 +11,7 @@ public record ContaBancariaRequest(
         BigDecimal saldo,
         boolean ativa,
         @NotNull
-        Long pessoaId,
+        Long titularId,
         @NotNull
         Long tipoContaId) {
 }

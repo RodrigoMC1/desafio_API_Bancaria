@@ -3,10 +3,7 @@ package CaixaVerso.service;
 import CaixaVerso.entity.ContaBancaria;
 import CaixaVerso.entity.Pessoa;
 import CaixaVerso.entity.TipoConta;
-import CaixaVerso.exception.ContaJaCadastradaException;
-import CaixaVerso.exception.CpfJaCadastradoException;
-import CaixaVerso.exception.PessoaNaoEncontradaException;
-import CaixaVerso.exception.TipoContaNaoEncontradaException;
+import CaixaVerso.exception.*;
 import CaixaVerso.repository.ContaBancariaRepository;
 import CaixaVerso.repository.PessoaRepository;
 import CaixaVerso.repository.TipoContaRepository;
@@ -39,7 +36,7 @@ public class ContaBancariaService {
 
     public ContaBancaria buscarPorId(Long id){
         return contaBancariaRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Conta não Localizada!") );
+                .orElseThrow(()-> new ContaNaoEncontradaException());
     }
 
     public List<ContaBancaria> buscarContasPorPessoa(Long id){
@@ -60,7 +57,7 @@ public class ContaBancariaService {
 
         //ContaExiste
             if(contaBancariaRepository.existsByAgenciaAndNumero(agencia,numero))
-                new ContaJaCadastradaException();
+                throw new ContaJaCadastradaException();
 
             ContaBancaria novaConta = new ContaBancaria(agencia,numero,saldo,ativa,pessoa,tipoConta);
 
