@@ -36,7 +36,7 @@ public class PessoaController {
     @PostMapping
     @Operation(summary = "Cadastrar Pessoa")
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Produto criado"),
+            @ApiResponse(responseCode = "201", description = "Pessoa criada"),
             @ApiResponse(responseCode = "400", description = "Dados inválidos")
     })
     public ResponseEntity<PessoaResponse> cadastrar(@Valid @RequestBody PessoaRequest dto){

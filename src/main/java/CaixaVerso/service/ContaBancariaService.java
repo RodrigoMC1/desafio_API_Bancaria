@@ -37,7 +37,7 @@ public class ContaBancariaService {
 
     public ContaBancaria buscarPorId(Long id){
         return contaBancariaRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Conta não Localizada!") );
+                .orElseThrow(()-> new ContaNaoEncontradaException());
     }
 
     public List<ContaBancaria> buscarContasPorPessoa(Long id){
@@ -58,7 +58,7 @@ public class ContaBancariaService {
 
         //ContaExiste
             if(contaBancariaRepository.existsByAgenciaAndNumero(agencia,numero))
-                new ContaJaCadastradaException();
+                throw new ContaJaCadastradaException();
 
             ContaBancaria novaConta = new ContaBancaria(agencia,numero,saldo,ativa,pessoa,tipoConta);
 

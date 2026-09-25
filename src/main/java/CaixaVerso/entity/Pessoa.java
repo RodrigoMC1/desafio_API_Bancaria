@@ -12,9 +12,10 @@ public class Pessoa {
 
     private String nome;
 
-    @Column(length = 11, unique = true)
+    @Column(nullable = false, length = 11, unique = true)
     private String cpf;
 
+    @Column(unique = true)
     private String email;
 
     protected Pessoa(){
