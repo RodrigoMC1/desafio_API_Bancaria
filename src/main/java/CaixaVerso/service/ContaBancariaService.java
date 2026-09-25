@@ -1,5 +1,6 @@
 package CaixaVerso.service;
 
+import CaixaVerso.controller.dto.ContaBancariaResponse;
 import CaixaVerso.entity.ContaBancaria;
 import CaixaVerso.entity.Pessoa;
 import CaixaVerso.entity.TipoConta;
@@ -7,14 +8,10 @@ import CaixaVerso.exception.*;
 import CaixaVerso.repository.ContaBancariaRepository;
 import CaixaVerso.repository.PessoaRepository;
 import CaixaVerso.repository.TipoContaRepository;
-import jakarta.persistence.Column;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.transaction.Transactional;
+
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -35,17 +32,23 @@ public class ContaBancariaService {
         return contaBancariaRepository.findAll();
     }
 
-    public ContaBancaria buscarPorId(Long id){
-        return contaBancariaRepository.findById(id)
-                .orElseThrow(()-> new ContaNaoEncontradaException());
+    @Transactional(readOnly = true)
+    public ContaBancariaResponse buscarPorId(Long id){
+        return ContaBancariaResponse.de(
+                contaBancariaRepository.findById(id)
+                .orElseThrow(()-> new ContaNaoEncontradaException())
+        );
     }
 
-    public List<ContaBancaria> buscarContasPorPessoa(Long id){
+    @Transactional(readOnly = true)
+    public List<ContaBancariaResponse> buscarContasPorPessoa(Long id){
         pessoaRepository.findById(id).orElseThrow(
                 ()-> new PessoaNaoEncontradaException()
         );
 
-        return contaBancariaRepository.findByTitularId(id);
+        List<ContaBancariaResponse> contas = contaBancariaRepository.findByTitularId(id)
+                .stream().map(ContaBancariaResponse::de).toList();
+        return contas;
     }
 
     @Transactional
@@ -68,23 +71,23 @@ public class ContaBancariaService {
     }
 
     @Transactional
-    public ContaBancaria sacar(Long id, @NotNull BigDecimal valor) {
+    public ContaBancariaResponse sacar(Long id, @NotNull BigDecimal valor) {
 
         ContaBancaria conta = contaBancariaRepository.findById(id)
                 .orElseThrow(()-> new ContaNaoEncontradaException());
 
         conta.sacar(valor);
 
-        return conta;
+        return ContaBancariaResponse.de(conta);
     }
 
     @Transactional
-    public ContaBancaria depositar(Long id, @NotNull BigDecimal valor) {
+    public ContaBancariaResponse depositar(Long id, @NotNull BigDecimal valor) {
 
         ContaBancaria conta = contaBancariaRepository.findById(id).orElseThrow(()-> new ContaNaoEncontradaException());
 
         conta.depositar(valor);
-        return conta;
+        return ContaBancariaResponse.de(conta);
 
     }
 }

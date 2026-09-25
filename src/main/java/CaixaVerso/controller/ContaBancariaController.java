@@ -52,33 +52,29 @@ public class ContaBancariaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<ContaBancariaResponse> buscar(@PathVariable Long id){
-
-        ContaBancaria conta = contaBancariaService.buscarPorId(id);
-
-        return ResponseEntity.ok(ContaBancariaResponse.de(conta));
+        ContaBancariaResponse conta = contaBancariaService.buscarPorId(id);
+        return ResponseEntity.ok(conta);
     }
 
     @GetMapping("/pessoa/{id}")
     public ResponseEntity<List<ContaBancariaResponse>> buscarPorPessoa(@PathVariable Long id){
-
-        List<ContaBancaria> contas = contaBancariaService.buscarContasPorPessoa(id);
-
-        return ResponseEntity.ok(contas.stream().map(ContaBancariaResponse::de).toList());
+        List<ContaBancariaResponse> contas = contaBancariaService.buscarContasPorPessoa(id);
+        return ResponseEntity.ok(contas);
     }
 
     @PatchMapping("/{id}/sacar/")
     public ResponseEntity<ContaBancariaResponse> sacar(@PathVariable Long id, @Valid @RequestBody SaqueRequest dto){
 
-        ContaBancaria conta = contaBancariaService.sacar(id, dto.valor());
+        ContaBancariaResponse conta = contaBancariaService.sacar(id, dto.valor());
 
-        return ResponseEntity.ok(ContaBancariaResponse.de(conta));
+        return ResponseEntity.ok(conta);
     }
 
     @PatchMapping("/{id}/depositar/")
     public ResponseEntity<ContaBancariaResponse> depositar(@PathVariable Long id, @Valid @RequestBody DepositoRequest dto){
-        ContaBancaria conta = contaBancariaService.depositar(id, dto.valor());
+        ContaBancariaResponse conta = contaBancariaService.depositar(id, dto.valor());
 
-        return ResponseEntity.ok(ContaBancariaResponse.de(conta));
+        return ResponseEntity.ok(conta);
     }
 
 }

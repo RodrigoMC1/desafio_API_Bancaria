@@ -10,4 +10,5 @@ public interface ContaBancariaRepository extends JpaRepository<ContaBancaria, Lo
     boolean existsByAgenciaAndNumero(String agencia, String numero);
 
     List<ContaBancaria> findByTitularId(Long id);
+
 }

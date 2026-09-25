@@ -27,7 +27,7 @@ public record ContaBancariaResponse(
             conta.getTitular().getId(),
             conta.getTitular().getNome(),
             conta.getTipoConta().getId(),
-                conta.getTipoConta().getNome()
+            conta.getTipoConta().getNome()
         );
     }
 }
