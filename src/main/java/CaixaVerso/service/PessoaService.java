@@ -1,9 +1,7 @@
 package CaixaVerso.service;
 
 import CaixaVerso.entity.Pessoa;
-import CaixaVerso.entity.TipoConta;
-import CaixaVerso.exception.ContaNaoEncontradaException;
-import CaixaVerso.exception.CpfJaCadastradoException;
+import CaixaVerso.exception.Erro409Conflito.CpfJaCadastradoException;
 import CaixaVerso.repository.PessoaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package CaixaVerso.service;
 
 import CaixaVerso.entity.TipoConta;
-import CaixaVerso.exception.ContaNaoEncontradaException;
+import CaixaVerso.exception.Erro404NaoEncontrato.ContaNaoEncontradaException;
 import CaixaVerso.repository.TipoContaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package CaixaVerso.entity;
 
-import CaixaVerso.exception.ContaInativaException;
-import CaixaVerso.exception.SaldoInsuficienteException;
-import CaixaVerso.exception.ValorMovimentacaoInvalidoException;
+import CaixaVerso.exception.Erro409Conflito.ContaInativaException;
+import CaixaVerso.exception.Erro409Conflito.SaldoInsuficienteException;
+import CaixaVerso.exception.Erro400ReuisicaoInvalida.ValorMovimentacaoInvalidoException;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
